@@ -1,0 +1,80 @@
+{
+  "name": "run-current-test",
+  "displayName": "Run current test",
+  "description": "Run current test at cursor position",
+  "version": "0.0.1",
+  "publisher": "asvetliakov",
+  "engines": {
+    "vscode": "^1.8.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:runCurrentTest.run",
+    "onCommand:runCurrentTest.runAndUpdateSnapshots"
+  ],
+  "main": "./out/src/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "runCurrentTest.run",
+        "title": "Run current test"
+      },
+      {
+        "command": "runCurrentTest.runAndUpdateSnapshots",
+        "title": "Run current test and update snapshots"
+      }
+    ],
+    "configuration": {
+      "title": "Run current test configuration",
+      "properties": {
+        "runCurrentTest.run": {
+          "type": ["string", "null"],
+          "default": null,
+          "description": "Command to run for \"Run current test\" command. You can use following substitutions:\n\t${workspaceRoot}\t - your current workspace root\n\t${testFilePath}\t - absolute file path to test file\n\t${relativeTestPath}\t - relative file path to test file\n\t${testName}\t - test block name\n\t${fullTestName}\t - Full test block name, including parent test blocks (i.e describe test1 test2)"
+        },
+        "runCurrentTest.runAndUpdateSnapshots": {
+          "type": ["string", "null"],
+          "default": null,
+          "description": "Command to run for \"Run current test and update snapshots\" command. You can use following substitutions:\n\t${workspaceRoot}\t - your current workspace root\n\t${testFilePath}\t - absolute file path to test file\n\t${relativeTestPath}\t - relative file path to test file\n\t${testName}\t - test block name\n\t${fullTestName}\t - Full test block name, including parent test blocks (i.e describe test1 test2)"
+        },
+        "runCurrentTest.autoSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Auto-save editor before running test"
+        },
+        "runCurrentTest.testBlockIdentifiers": {
+          "type": "array",
+          "default": ["suite", "describe", "context", "test", "it", "fit", "xit"],
+          "description": "Array of test block names to match"
+        },
+        "runCurrentTest.testNameSeparator": {
+          "type": "string",
+          "default": "\\s",
+          "description": "String regex separator in test blocks when using ${fullTestName}"
+        },
+        "runCurrentTest.unknownTestNameLiteral": {
+          "type": "string",
+          "default": ".*",
+          "description": "String regex identifier for any blocks which doesn't have name (or it can't be analyzed)"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "tsc -p ./",
+    "compile": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "vscode": "^1.0.0",
+    "mocha": "^2.3.3",
+    "@types/node": "^6.0.40",
+    "@types/mocha": "^2.2.32"
+  },
+  "dependencies": {
+    "typescript": "^2.1.4"
+  }
+}
