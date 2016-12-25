@@ -28,12 +28,12 @@ You can use following templates for substitution in run commands:
 
 ## Extension Settings
 
-```runCurrentTest.run``` - See above
-```runCurrentTest.runAndUpdateSnapshots``` - See above
-```runCurrentTest.autoSave``` - Auto-save dirty editor when running run command. Default is true
-```runCurrentTest.testBlockIdentifiers``` - Set to the name of test block identifiers (i.e. describe, it, etc...). The default ones provide good match
-```runCurrentTest.testNameSeparator``` - Separator between block names used in ```${fullTestName}```. Default is ```\\s``` which is space
-```runCurrentTest.unknownTestNameLiteral``` - Identifier used as block name if block name couldn't be determined. Default is ```.*```
+* ```runCurrentTest.run``` - See above
+* ```runCurrentTest.runAndUpdateSnapshots``` - See above
+* ```runCurrentTest.autoSave``` - Auto-save dirty editor when running run command. Default is true
+* ```runCurrentTest.testBlockIdentifiers``` - Set to the name of test block identifiers (i.e. describe, it, etc...). The default ones provide good match
+* ```runCurrentTest.testNameSeparator``` - Separator between block names used in ```${fullTestName}```. Default is ```\\s``` which is space
+* ```runCurrentTest.unknownTestNameLiteral``` - Identifier used as block name if block name couldn't be determined. Default is ```.*```
 
 ## TODO
 
