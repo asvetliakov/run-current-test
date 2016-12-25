@@ -7,9 +7,14 @@
   "engines": {
     "vscode": "^1.8.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/asvetliakov/run-current-test"
+  },
   "categories": [
     "Other"
   ],
+  "icon": "icon.png",
   "activationEvents": [
     "onCommand:runCurrentTest.run",
     "onCommand:runCurrentTest.runAndUpdateSnapshots"
