@@ -13,9 +13,20 @@
 You must set *run* or *runAndUpdateSnapshots* command
 
 For Jest:
-```json
-    "runCurrentTest.run": "${workspaceRoot}/node_modules/.bin/jest --testPathPattern ${testFilePath} --testNamePattern \"${fullTestName}\"",
-    "runCurrentTest.runAndUpdateSnapshots": "${workspaceRoot}/node_modules/.bin/jest -u --testPathPattern ${testFilePath} --testNamePattern \"${fullTestName}\""
+```js
+    "runCurrentTest.run": "${workspaceRoot}/node_modules/.bin/jest ${relativeTestPath} --testNamePattern \"${fullTestName}\"",
+    "runCurrentTest.runAndUpdateSnapshots": "${workspaceRoot}/node_modules/.bin/jest -u ${relativeTestPath} --testNamePattern \"${fullTestName}\""
+    // windows
+    "runCurrentTest.run": "${workspaceRoot}\\node_modules\\.bin\\jest.cmd ${relativeTestPath} --testNamePattern \"${fullTestName}\"",
+    "runCurrentTest.runAndUpdateSnapshots": "${workspaceRoot}\\node_modules\\.bin\\jest.cmd -u ${relativeTestPath} --testNamePattern \"${fullTestName}\""
+```
+For ava:
+```js
+    "runCurrentTest.run": "${workspaceRoot}/node_modules/.bin/ava ${relativeTestPath} --match \"${fullTestName}\"",
+    "runCurrentTest.runAndUpdateSnapshots": "${workspaceRoot}/node_modules/.bin/ava -u ${relativeTestPath} --testNamePattern \"${fullTestName}\""
+    // windows
+    "runCurrentTest.run": "${workspaceRoot}\\node_modules\\.bin\\ava.cmd ${relativeTestPath} --match \"${fullTestName}\"",
+    "runCurrentTest.runAndUpdateSnapshots": "${workspaceRoot}\\node_modules\\.bin\\ava.cmd -u ${relativeTestPath} --match \"${fullTestName}\""
 ```
 
 
