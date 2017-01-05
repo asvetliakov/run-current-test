@@ -6,12 +6,16 @@ import { findTestBlockForLineAndCharacter, getTestBlocks } from "./parser";
 const defaultBlockIdentifiers = [
     "suite",
     "describe",
+    "xdescribe",
+    "fdescribe",
     "context",
     "test",
     "it",
     "fit",
     "xit"
 ]
+
+let terminal: vscode.Terminal | undefined;
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -51,10 +55,12 @@ export function activate(context: vscode.ExtensionContext) {
                 workspaceRoot: vscode.workspace.rootPath
             });
             
-            const terminal = vscode.window.createTerminal("Current test run");
+            if (!terminal) {
+                terminal = vscode.window.createTerminal("Current test run");
+                context.subscriptions.push(terminal);
+            }
             terminal.sendText(finalCommand, true);
             terminal.show(true);
-            context.subscriptions.push(terminal);
         } catch (e) {
             vscode.window.showErrorMessage("Error parsing test file");
             return;
