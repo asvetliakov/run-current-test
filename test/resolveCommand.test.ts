@@ -1,5 +1,6 @@
-import { resolveCommand, ResolveCommandOptions } from "../src/resolveCommand";
 import * as assert from "assert";
+import * as path from "path";
+import { resolveCommand, ResolveCommandOptions } from "../src/resolveCommand";
 
 describe("resolveCommand()", () => {
     let options: ResolveCommandOptions;
@@ -18,8 +19,9 @@ describe("resolveCommand()", () => {
         };
     });
     it("Should resolve command and substitute template literals", () => {
+        const expectedRelativePath = path.relative(options.workspaceRoot, options.testFilePath);
         const result = resolveCommand("node ${workspaceRoot}/test ${testFilePath} ${relativeTestPath} \"${testName}\" \"${fullTestName}\"", options);
-        assert.equal(result, "node /home/test/test /home/test/src/test.tsx src/test.tsx \"test block\" \"describe\\scontext\\stest block\"");
+        assert.equal(result, `node /home/test/test /home/test/src/test.tsx ${expectedRelativePath} "test block" "describe\\scontext\\stest block"`);
     });
     
     it("Should return unknodwnTestName literal as testName or fullTestName if test block is undefined or doesn't have name and any parentBlockNames", () => {
@@ -51,5 +53,17 @@ describe("resolveCommand()", () => {
         options.testBlock!.name = undefined;
         result = resolveCommand("${testName} ${fullTestName}", options);
         assert.equal(result, ".* describe\\s.*\\scontext\\s.*");
+    });
+    
+    it("Should escape test block names", () => {
+        options.testBlock = {
+            name: "test[] ${name} block()^+?",
+            parentBlockNames: ["describe(${name})[]", "context?+"],
+            endPos: 0,
+            startPos: 0
+        };
+        
+        const result = resolveCommand("${fullTestName}", options);
+        assert.equal(result, "describe\\(\\$\\{name\\}\\)\\[\\]\\scontext\\?\\+\\stest\\[\\] \\$\\{name\\} block\\(\\)\\^\\+\\?");
     });
 });

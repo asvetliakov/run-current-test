@@ -60,9 +60,9 @@ export function resolveCommand(command: string, options: ResolveCommandOptions):
     let fullTestName: string = options.unknownTestNameLiteral;
     let testName = options.unknownTestNameLiteral;
     if (options.testBlock && (options.testBlock.name || options.testBlock.parentBlockNames.length > 0)) {
-        const parentBlockNames = options.testBlock.parentBlockNames.map(blockName => blockName || options.unknownTestNameLiteral);
+        const parentBlockNames = options.testBlock.parentBlockNames.map(blockName => blockName ? escapeStringForRegExp(blockName) : options.unknownTestNameLiteral);
         if (options.testBlock.name) {
-            testName = options.testBlock.name;
+            testName = escapeStringForRegExp(options.testBlock.name);
         }
         fullTestName = [...parentBlockNames, testName].join(options.testNameSeparator);
     }
@@ -72,4 +72,15 @@ export function resolveCommand(command: string, options: ResolveCommandOptions):
         .replace("${relativeTestPath}", testRelativePath)
         .replace("${testName}", testName)
         .replace("${fullTestName}", fullTestName);
+}
+
+/**
+ * Escape string to be used in regular expression
+ * 
+ * @param {string} str
+ * @returns {string}
+ */
+function escapeStringForRegExp(str: string): string {
+    const escapeRegExp = /[|\\{}()[\]^$+*?.]/g;
+    return str.replace(escapeRegExp, "\\$&");
 }
