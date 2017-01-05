@@ -2,7 +2,7 @@
   "name": "run-current-test",
   "displayName": "Run current test",
   "description": "Run current test at cursor position",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "asvetliakov",
   "engines": {
     "vscode": "^1.8.0"

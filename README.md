@@ -23,10 +23,16 @@ For Jest:
 For ava:
 ```js
     "runCurrentTest.run": "${workspaceRoot}/node_modules/.bin/ava ${relativeTestPath} --match \"${fullTestName}\"",
-    "runCurrentTest.runAndUpdateSnapshots": "${workspaceRoot}/node_modules/.bin/ava -u ${relativeTestPath} --testNamePattern \"${fullTestName}\""
+    "runCurrentTest.runAndUpdateSnapshots": "${workspaceRoot}/node_modules/.bin/ava -u ${relativeTestPath} --match \"${fullTestName}\""
     // windows
     "runCurrentTest.run": "${workspaceRoot}\\node_modules\\.bin\\ava.cmd ${relativeTestPath} --match \"${fullTestName}\"",
     "runCurrentTest.runAndUpdateSnapshots": "${workspaceRoot}\\node_modules\\.bin\\ava.cmd -u ${relativeTestPath} --match \"${fullTestName}\""
+```
+For mocha:
+```js
+    "runCurrentTest.run": "${workspaceRoot}/node_modules/.bin/mocha ${relativeTestPath} --grep \"${fullTestName}\"",
+    // windows
+    "runCurrentTest.run": "${workspaceRoot}\\node_modules\\.bin\\mocha.cmd ${relativeTestPath} --grep \"${fullTestName}\"",
 ```
 
 
