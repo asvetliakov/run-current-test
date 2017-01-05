@@ -55,10 +55,12 @@ export function activate(context: vscode.ExtensionContext) {
                 workspaceRoot: vscode.workspace.rootPath
             });
             
-            if (!terminal) {
-                terminal = vscode.window.createTerminal("Current test run");
-                context.subscriptions.push(terminal);
+            // dispose previous terminal instance
+            if (terminal) {
+                terminal.dispose();
             }
+            
+            terminal = vscode.window.createTerminal("Current test run");
             terminal.sendText(finalCommand, true);
             terminal.show(true);
         } catch (e) {
@@ -82,4 +84,9 @@ export function activate(context: vscode.ExtensionContext) {
 
 // this method is called when your extension is deactivated
 export function deactivate() {
+    // not managed by context.subscriptions
+    if (terminal) {
+        terminal.dispose();
+        terminal = undefined;
+    }
 }
