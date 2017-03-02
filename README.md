@@ -35,6 +35,12 @@ For mocha:
     "runCurrentTest.run": "${workspaceRoot}\\node_modules\\.bin\\mocha.cmd ${relativeTestPath} --grep \"${fullTestName}\"",
 ```
 
+*You can pass any command here, for example if you need to additionally set ```NODE_ENV=test```*:
+```js
+    "runCurrentTest.run": "NODE_ENV=test ${workspaceRoot}/node_modules/.bin/jest ${relativeTestPath} --testNamePattern \"${fullTestName}\"",
+```
+I'd recommend to use test setup file instead though.
+
 
 You can use following templates for substitution in run commands:
 * ```${workspaceRoot}``` - Will be replaced with absolute path to workspace root
