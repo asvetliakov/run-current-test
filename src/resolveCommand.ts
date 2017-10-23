@@ -67,11 +67,11 @@ export function resolveCommand(command: string, options: ResolveCommandOptions):
         fullTestName = [...parentBlockNames, testName].join(options.testNameSeparator);
     }
     return command
-        .replace("${workspaceRoot}", options.workspaceRoot)
-        .replace("${testFilePath}", options.testFilePath)
-        .replace("${relativeTestPath}", testRelativePath)
-        .replace("${testName}", testName)
-        .replace("${fullTestName}", fullTestName);
+        .replace(/\${workspaceRoot}/g, options.workspaceRoot)
+        .replace(/\${testFilePath}/g, options.testFilePath)
+        .replace(/\${relativeTestPath}/g, testRelativePath)
+        .replace(/\${testName}/g, testName)
+        .replace(/\${fullTestName}/g, fullTestName);
 }
 
 /**
