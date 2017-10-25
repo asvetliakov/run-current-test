@@ -3,21 +3,21 @@ import { TestBlock } from "./parser";
 
 /**
  * Resolve options
- * 
+ *
  * @export
  * @interface ResolveCommandOptions
  */
 export interface ResolveCommandOptions {
     /**
      * Workspace absolute root
-     * 
+     *
      * @type {string}
      * @memberOf ResolveCommandOptions
      */
     workspaceRoot: string;
     /**
      * Current test file path
-     * 
+     *
      * @type {string}
      * @memberOf ResolveCommandOptions
      */
@@ -25,21 +25,21 @@ export interface ResolveCommandOptions {
     /**
      * Test/suite name separator.
      * When constructing full test name, the separator will be used between test block
-     * 
+     *
      * @type {string}
      * @memberOf ResolveCommandOptions
      */
     testNameSeparator: string;
     /**
      * String to use when test/suite block name is undefined
-     * 
+     *
      * @type {string}
      * @memberOf ResolveCommandOptions
      */
     unknownTestNameLiteral: string;
     /**
      * Matched test block
-     * 
+     *
      * @type {TestBlock}
      * @memberOf ResolveCommandOptions
      */
@@ -47,8 +47,8 @@ export interface ResolveCommandOptions {
 }
 
 /**
- * Resolve given command and replace template 
- * 
+ * Resolve given command and replace template
+ *
  * @export
  * @param {string} command
  * @param {ResolveCommandOptions} options
@@ -76,7 +76,7 @@ export function resolveCommand(command: string, options: ResolveCommandOptions):
 
 /**
  * Escape string to be used in regular expression
- * 
+ *
  * @param {string} str
  * @returns {string}
  */
