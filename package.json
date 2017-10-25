@@ -38,32 +38,38 @@
         "runCurrentTest.run": {
           "type": ["string", "null"],
           "default": null,
-          "description": "Command to run for \"Run current test\" command. You can use following substitutions:\n\t${workspaceRoot}\t - your current workspace root\n\t${testFilePath}\t - absolute file path to test file\n\t${relativeTestPath}\t - relative file path to test file\n\t${testName}\t - test block name\n\t${fullTestName}\t - Full test block name, including parent test blocks (i.e describe test1 test2)"
+          "description": "Command to run for \"Run current test\" command. You can use following substitutions:\n\t${workspaceRoot}\t - your current workspace root\n\t${testFilePath}\t - absolute file path to test file\n\t${relativeTestPath}\t - relative file path to test file\n\t${testName}\t - test block name\n\t${fullTestName}\t - Full test block name, including parent test blocks (i.e describe test1 test2)",
+          "scope": "resource"
         },
         "runCurrentTest.runAndUpdateSnapshots": {
           "type": ["string", "null"],
           "default": null,
-          "description": "Command to run for \"Run current test and update snapshots\" command. You can use following substitutions:\n\t${workspaceRoot}\t - your current workspace root\n\t${testFilePath}\t - absolute file path to test file\n\t${relativeTestPath}\t - relative file path to test file\n\t${testName}\t - test block name\n\t${fullTestName}\t - Full test block name, including parent test blocks (i.e describe test1 test2)"
+          "description": "Command to run for \"Run current test and update snapshots\" command. You can use following substitutions:\n\t${workspaceRoot}\t - your current workspace root\n\t${testFilePath}\t - absolute file path to test file\n\t${relativeTestPath}\t - relative file path to test file\n\t${testName}\t - test block name\n\t${fullTestName}\t - Full test block name, including parent test blocks (i.e describe test1 test2)",
+          "scope": "resource"
         },
         "runCurrentTest.autoSave": {
           "type": "boolean",
           "default": true,
-          "description": "Auto-save editor before running test"
+          "description": "Auto-save editor before running test",
+          "scope": "window"
         },
         "runCurrentTest.testBlockIdentifiers": {
           "type": "array",
           "default": ["suite", "describe", "context", "test", "it", "fit", "xit"],
-          "description": "Array of test block names to match"
+          "description": "Array of test block names to match",
+          "scope": "resource"
         },
         "runCurrentTest.testNameSeparator": {
           "type": "string",
           "default": "\\s",
-          "description": "String regex separator in test blocks when using ${fullTestName}"
+          "description": "String regex separator in test blocks when using ${fullTestName}",
+          "scope": "resource"
         },
         "runCurrentTest.unknownTestNameLiteral": {
           "type": "string",
           "default": ".*",
-          "description": "String regex identifier for any blocks which doesn't have name (or it can't be analyzed)"
+          "description": "String regex identifier for any blocks which doesn't have name (or it can't be analyzed)",
+          "scope": "resource"
         }
       }
     }
