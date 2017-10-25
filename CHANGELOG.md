@@ -1,3 +1,8 @@
+## [0.1.0]
+- Support multi-root workspaces
+- Added license (MIT)
+- Run previous test command if no test blocks were found (configurable, default true)
+
 ## [0.0.2]
 - Added few more identifiers to default test blocks
 - Test block titles are now being escaped properly

@@ -10,7 +10,23 @@
 
 ## Requirements
 
-You must set *run* or *runAndUpdateSnapshots* command
+You must set *run* or *runAndUpdateSnapshots* command:
+
+*Way 1 (preferred)*:
+Define your test command in ```package.json```, for example:
+```json
+    "scripts": {
+        "test": "jest"
+    }
+```
+Then define commands in .vscode/settings.json similar to these (example for jest):
+```js
+    "runCurrentTest.run": "npm run test -- ${relativeTestPath} --runTestsByPath \"^${fullTestName}$\"",
+    "runCurrentTest.runAndUpdateSnapshots": "npm run test -- -u ${relativeTestPath} --runTestsByPath \"^${fullTestName}$\""
+```
+
+*Way 2*:
+Use full path without involing npm scripts, similar to these:
 
 For Jest:
 ```js
@@ -54,6 +70,7 @@ You can use following templates for substitution in run commands:
 * ```runCurrentTest.run``` - See above
 * ```runCurrentTest.runAndUpdateSnapshots``` - See above
 * ```runCurrentTest.autoSave``` - Auto-save dirty editor when running run command. Default is true
+* ```runCurrentTest.usePreviousTestCommand``` - Use previous test command if no test blocks (```it(), describe(), etc```) were found in the file. Useful when have opened test & source side-by-side and keep forgetting to switch to test side to run command
 * ```runCurrentTest.testBlockIdentifiers``` - Set to the name of test block identifiers (i.e. describe, it, etc...). The default ones provide good match
 * ```runCurrentTest.testNameSeparator``` - Separator between block names used in ```${fullTestName}```. Default is ```\\s``` which is space
 * ```runCurrentTest.unknownTestNameLiteral``` - Identifier used as block name if block name couldn't be determined. Default is ```.*```
@@ -64,6 +81,11 @@ Debug current test
 
 
 ## Release Notes
+
+## [0.1.0]
+- Support multi-root workspaces
+- Added license (MIT)
+- Run previous test command if no test blocks were found (configurable, default true)
 
 ## 0.0.2
 
