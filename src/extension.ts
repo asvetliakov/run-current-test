@@ -25,6 +25,8 @@ function getConfiguration(uri: vscode.Uri): vscode.WorkspaceConfiguration {
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
+    let previousCommand: string | undefined;
+
     const runTestComamnd = (editor: vscode.TextEditor, command: string) => {
         const document = editor.document;
         const configuration = getConfiguration(document.uri);
@@ -57,13 +59,25 @@ export function activate(context: vscode.ExtensionContext) {
             const sourceFile = createSourceFile("test.tsx", document.getText(), ScriptTarget.Latest, true, ScriptKind.TSX);
             const blocks = getTestBlocks(sourceFile, configuration.get("testBlockIdentifiers", defaultBlockIdentifiers));
             const block = findTestBlockForLineAndCharacter(sourceFile, blocks, editor.selection.active.line, editor.selection.active.character);
-            const finalCommand = resolveCommand(runCurrentTestCommand, {
+
+            let finalCommand = resolveCommand(runCurrentTestCommand, {
                 testBlock: block,
                 testFilePath: document.fileName,
                 testNameSeparator: configuration.get("testNameSeparator", "\\s"),
                 unknownTestNameLiteral: configuration.get("unknownTestNameLiteral", ".*"),
                 workspaceRoot: workspaceRoot
             });
+
+            const usePreviousCommand = configuration.get("usePreviousTestCommand", true);
+            // use previous command if no test blocks found for the file, useful when have opened source & test side-by-side
+            if (blocks.length === 0 && previousCommand && usePreviousCommand) {
+                finalCommand = previousCommand;
+            }
+
+            // store command if has any test blocks
+            if (blocks.length > 0) {
+                previousCommand = finalCommand;
+            }
 
             // dispose previous terminal instance
             if (terminal) {

@@ -53,6 +53,12 @@
           "description": "Auto-save editor before running test",
           "scope": "window"
         },
+        "runCurrentTest.usePreviousTestCommand": {
+          "type": "boolean",
+          "default": true,
+          "description": "Use previous test command if no test blocks were found. Useful when editing source & test side-by-side and keep forgetting to switch to test source",
+          "scope": "resource"
+        },
         "runCurrentTest.testBlockIdentifiers": {
           "type": "array",
           "default": ["suite", "describe", "context", "test", "it", "fit", "xit"],
