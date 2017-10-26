@@ -13,14 +13,14 @@ describe("getTestBlocks()", () => {
         const result = getTestBlocks(file, ["it"]);
         assert.equal(result.length, 0);
     });
-    
+
     it("Should return test blocks matched to identifiers", () => {
         const source = `
         describe("test", () => {
             beforeEach(() => {});
             context("test context", () => {
                 it("test test", () => {});
-                
+
                 shouldNotMatch("should not match" , () => {
 
                 });
@@ -34,15 +34,15 @@ describe("getTestBlocks()", () => {
 
             });
         });
-        
+
         it("Without suite", () => {
 
         });
-        
+
         shouldNotMatch("should not match", () => {
 
         });
-        
+
         describe("Inner describe", () => {
             const test = () => {
                 it("test in arrow function", () => {
@@ -50,15 +50,15 @@ describe("getTestBlocks()", () => {
                 });
             }
         });
-        
+
         test("ava test", t => {
 
         });
-        
+
         test.only("another ava-like test", t => {
 
         });
-        
+
         test.cb.beforeEach("something strange", () => {})
         `
         const file = createSourceFile("test.ts", source, ScriptTarget.ES2015, true);
@@ -69,13 +69,13 @@ describe("getTestBlocks()", () => {
                 name: "test",
                 parentBlockNames: [],
                 startPos: 9,
-                endPos: 279
+                endPos: 263
             },
             {
                 name: "test context",
                 parentBlockNames: ["test"],
                 startPos: 80,
-                endPos: 267
+                endPos: 251
             },
             {
                 name: "test test",
@@ -86,60 +86,60 @@ describe("getTestBlocks()", () => {
             {
                 name: "suite",
                 parentBlockNames: [],
-                startPos: 290,
-                endPos: 314
+                startPos: 274,
+                endPos: 298
             },
             {
                 name: "desc only",
                 parentBlockNames: [],
-                startPos: 325,
-                endPos: 432
+                startPos: 309,
+                endPos: 416
             },
             {
                 name: "only context",
                 parentBlockNames: ["desc only"],
-                startPos: 372,
-                endPos: 420
+                startPos: 356,
+                endPos: 404
             },
             {
                 name: "Without suite",
                 parentBlockNames: [],
-                startPos: 451,
-                endPos: 490
+                startPos: 427,
+                endPos: 466
             },
             {
                 name: "Inner describe",
                 parentBlockNames: [],
-                startPos: 582,
-                endPos: 748
+                startPos: 542,
+                endPos: 708
             },
             {
                 name: "test in arrow function",
                 parentBlockNames: ["Inner describe"],
-                startPos: 666,
-                endPos: 722
+                startPos: 626,
+                endPos: 682
             },
             {
                 name: "ava test",
                 parentBlockNames: [],
-                startPos: 767,
-                endPos: 802
+                startPos: 719,
+                endPos: 754
             },
             {
                 name: "another ava-like test",
                 parentBlockNames: [],
-                startPos: 821,
-                endPos: 874
+                startPos: 765,
+                endPos: 818
             },
             {
                 name: "something strange",
                 parentBlockNames: [],
-                startPos: 893,
-                endPos: 942
+                startPos: 829,
+                endPos: 878
             }
         ]);
     });
-    
+
     it("Should pass undefined as test block name if coudln't be determined", () => {
         const source = `
         describe("test1", () => {
@@ -147,22 +147,22 @@ describe("getTestBlocks()", () => {
 
             });
         });
-        
+
         describe("test2", () => {
             it(\`interpolated string \${name}\`, () => {
             });
         });
-        
+
         describe(descName, () => {
             it(testName, () => {
 
             });
         });
-        
+
         test(() => {
 
         });
-        
+
         test(function () {
 
         });
@@ -186,38 +186,38 @@ describe("getTestBlocks()", () => {
             {
                 name: "test2",
                 parentBlockNames: [],
-                startPos: 110,
-                endPos: 216
+                startPos: 102,
+                endPos: 208
             },
             {
                 name: undefined,
                 parentBlockNames: ["test2"],
-                startPos: 148,
-                endPos: 204
+                startPos: 140,
+                endPos: 196
             },
             {
                 name: undefined,
                 parentBlockNames: [],
-                startPos: 235,
-                endPos: 322
+                startPos: 219,
+                endPos: 306
             },
             {
                 name: undefined,
                 parentBlockNames: [undefined],
-                startPos: 274,
-                endPos: 310
+                startPos: 258,
+                endPos: 294
             },
             {
                 name: undefined,
                 parentBlockNames: [],
-                startPos: 341,
-                endPos: 365
+                startPos: 317,
+                endPos: 341
             },
             {
                 name: undefined,
                 parentBlockNames: [],
-                startPos: 384,
-                endPos: 414
+                startPos: 352,
+                endPos: 382
             }
         ]);
     });
@@ -232,31 +232,31 @@ describe("findTestBlockForLineAndCharacter()", () => {
                     it("test 1", () => {
 
                     });
-                    
+
                     it("test 2", () => {
 
                     });
                 });
-                
+
                 describe("context 2", () => {
 
                 });
             });
-            
+
             describe("suite 2", () => {
 
             });
         `;
-        
+
         file = createSourceFile("test.ts", source, ScriptTarget.ES2015, true);
     });
-    
+
     it("Should return undefined for position not in any test block", () => {
         const blocks = getTestBlocks(file, ["describe", "it"]);
         const result = findTestBlockForLineAndCharacter(file, blocks, 16, 0);
         assert.equal(result, undefined);
     });
-    
+
     it("Should return test block", () => {
         const blocks = getTestBlocks(file, ["describe", "it"]);
         let result = findTestBlockForLineAndCharacter(file, blocks, 4, 0);
@@ -266,7 +266,7 @@ describe("findTestBlockForLineAndCharacter()", () => {
         result = findTestBlockForLineAndCharacter(file, blocks, 5, 0);
         assert.notEqual(result, undefined);
         assert.equal(result!.name, "test 1");
-        
+
         result = findTestBlockForLineAndCharacter(file, blocks, 6, 0);
         assert.notEqual(result, undefined);
         assert.equal(result!.name, "context 1");
@@ -275,7 +275,7 @@ describe("findTestBlockForLineAndCharacter()", () => {
         assert.notEqual(result, undefined);
         assert.equal(result!.name, "suite 1");
 
-        result = findTestBlockForLineAndCharacter(file, blocks, 18, 4);
+        result = findTestBlockForLineAndCharacter(file, blocks, 19, 4);
         assert.notEqual(result, undefined);
         assert.equal(result!.name, "suite 2");
     });
