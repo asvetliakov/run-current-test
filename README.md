@@ -21,8 +21,8 @@ Define your test command in ```package.json```, for example:
 ```
 Then define commands in .vscode/settings.json similar to these (example for jest):
 ```js
-    "runCurrentTest.run": "npm run test -- ${relativeTestPath} --runTestsByPath \"^${fullTestName}$\"",
-    "runCurrentTest.runAndUpdateSnapshots": "npm run test -- -u ${relativeTestPath} --runTestsByPath \"^${fullTestName}$\""
+    "runCurrentTest.run": "npm run test -- ${relativeTestPath} --runTestsByPath --testNamePattern \"^${fullTestName}$\"",
+    "runCurrentTest.runAndUpdateSnapshots": "npm run test -- -u ${relativeTestPath} --runTestsByPath --testNamePattern \"^${fullTestName}$\""
 ```
 
 *Way 2*:
@@ -30,11 +30,11 @@ Use full path without involing npm scripts, similar to these:
 
 For Jest:
 ```js
-    "runCurrentTest.run": "${workspaceRoot}/node_modules/.bin/jest ${relativeTestPath} --testNamePattern \"${fullTestName}\"",
-    "runCurrentTest.runAndUpdateSnapshots": "${workspaceRoot}/node_modules/.bin/jest -u ${relativeTestPath} --testNamePattern \"${fullTestName}\""
+    "runCurrentTest.run": "${workspaceRoot}/node_modules/.bin/jest ${relativeTestPath} --runTestsByPath --testNamePattern \"${fullTestName}\"",
+    "runCurrentTest.runAndUpdateSnapshots": "${workspaceRoot}/node_modules/.bin/jest -u ${relativeTestPath} --runTestsByPath --testNamePattern \"${fullTestName}\""
     // windows
-    "runCurrentTest.run": "${workspaceRoot}\\node_modules\\.bin\\jest.cmd ${relativeTestPath} --testNamePattern \"${fullTestName}\"",
-    "runCurrentTest.runAndUpdateSnapshots": "${workspaceRoot}\\node_modules\\.bin\\jest.cmd -u ${relativeTestPath} --testNamePattern \"${fullTestName}\""
+    "runCurrentTest.run": "${workspaceRoot}\\node_modules\\.bin\\jest.cmd ${relativeTestPath} --runTestsByPath --testNamePattern \"${fullTestName}\"",
+    "runCurrentTest.runAndUpdateSnapshots": "${workspaceRoot}\\node_modules\\.bin\\jest.cmd -u ${relativeTestPath} --runTestsByPath --testNamePattern \"${fullTestName}\""
 ```
 For ava:
 ```js
