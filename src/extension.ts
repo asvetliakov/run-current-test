@@ -65,6 +65,7 @@ export function activate(context: vscode.ExtensionContext) {
                 testFilePath: document.fileName,
                 testNameSeparator: configuration.get("testNameSeparator", "\\s"),
                 unknownTestNameLiteral: configuration.get("unknownTestNameLiteral", ".*"),
+                unixPaths: configuration.get("unixPaths", true),
                 workspaceRoot: workspaceRoot
             });
 

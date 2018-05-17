@@ -1,3 +1,6 @@
+## [0.2.0]
+- Add unixPaths (default true) command to convert path separators in test path to /
+
 ## [0.1.0]
 - Support multi-root workspaces
 - Added license (MIT)

@@ -2,10 +2,10 @@
   "name": "run-current-test",
   "displayName": "Run current test",
   "description": "Run current test at cursor position",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "publisher": "asvetliakov",
   "engines": {
-    "vscode": "^1.17.0"
+    "vscode": "^1.23.0"
   },
   "repository": {
     "type": "git",
@@ -75,6 +75,12 @@
           "type": "string",
           "default": ".*",
           "description": "String regex identifier for any blocks which doesn't have name (or it can't be analyzed)",
+          "scope": "resource"
+        },
+        "runCurrentTest.unixPaths": {
+          "type": "boolean",
+          "default": true,
+          "description": "Use unix separator / for test paths",
           "scope": "resource"
         }
       }

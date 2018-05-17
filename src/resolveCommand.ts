@@ -44,6 +44,11 @@ export interface ResolveCommandOptions {
      * @memberOf ResolveCommandOptions
      */
     testBlock?: TestBlock;
+
+    /**
+     * Always use unix like paths, / instead of \ on windows
+     */
+    unixPaths: boolean;
 }
 
 /**
@@ -55,7 +60,9 @@ export interface ResolveCommandOptions {
  * @returns {string}
  */
 export function resolveCommand(command: string, options: ResolveCommandOptions): string {
-    const testRelativePath = path.relative(options.workspaceRoot, options.testFilePath);
+    let testRelativePath = path.relative(options.workspaceRoot, options.testFilePath);
+    let testFilePath = options.testFilePath;
+    let workspaceRoot = options.workspaceRoot;
     // If no test block given then use unknown test name literal
     let fullTestName: string = options.unknownTestNameLiteral;
     let testName = options.unknownTestNameLiteral;
@@ -66,9 +73,14 @@ export function resolveCommand(command: string, options: ResolveCommandOptions):
         }
         fullTestName = [...parentBlockNames, testName].join(options.testNameSeparator);
     }
+    if (options.unixPaths) {
+        testRelativePath = testRelativePath.replace(/\\/g, "/");
+        testFilePath = testFilePath.replace(/\\/g, "/");
+        workspaceRoot = workspaceRoot.replace(/\\/g, "/");
+    }
     return command
-        .replace(/\${workspaceRoot}/g, options.workspaceRoot)
-        .replace(/\${testFilePath}/g, options.testFilePath)
+        .replace(/\${workspaceRoot}/g, workspaceRoot)
+        .replace(/\${testFilePath}/g, testFilePath)
         .replace(/\${relativeTestPath}/g, testRelativePath)
         .replace(/\${testName}/g, testName)
         .replace(/\${fullTestName}/g, fullTestName);
